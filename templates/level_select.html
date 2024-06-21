@@ -1,0 +1,18 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Level Select</title>
+</head>
+
+<body>
+<h1>Level Select</h1>
+<ul>
+{% for level in levels %}
+<li><a href="/play?level_id={{ level.id }}">{{ level.name }}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>
+
+
