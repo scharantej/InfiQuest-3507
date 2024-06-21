@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{ level.name }}</title>
+</head>
+
+<body>
+<h1>{{ level.name }}</h1>
+<p>{{ level.description }}</p>
+<canvas id="game-canvas" width="500" height="500"></canvas>
+<script>
+const level = {{ level }};
+const canvas = document.getElementById('game-canvas');
+const ctx = canvas.getContext('2d');
+
+// Draw the level
+for (let i = 0; i < level.map.length; i++) {
+for (let j = 0; j < level.map[i].length; j++) {
+ctx.fillStyle = 'black';
+ctx.fillRect(i * 10, j * 10, 10, 10);
+}
+}
+
+// Draw the player
+ctx.fillStyle = 'red';
+ctx.fillRect(level.player_position[0] * 10, level.player_position[1] * 10, 10, 10);
+
+// Draw the goal
+ctx.fillStyle = 'green';
+ctx.fillRect(level.goal_position[0] * 10, level.goal_position[1] * 10, 10, 10);
+
+// Handle player input
+document.addEventListener('keydown', (e) => {
+if (e.key === 'ArrowUp') {
+// Move the player up
+level.player_position[1] -= 1;
+} else if (e.key === 'ArrowDown') {
+// Move the player down
+level.player_position[1] += 1;
+} else if (e.key === 'ArrowLeft') {
+// Move the player left
+level.player_position[0] -= 1;
+} else if (e.key === 'ArrowRight') {
+// Move the player right
+level.player_position[0] += 1;
+}
+
+// Redraw the level
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+for (let i = 0; i < level.map.length; i++) {
+for (let j = 0; j < level.map[i].length; j++) {
+ctx.fillStyle = 'black';
+ctx.fillRect(i * 10, j * 10, 10, 10);
+}
+}
+ctx.fillStyle = 'red';
+ctx.fillRect(level.player_position[0] * 10, level.player_position[1] * 10, 10, 10);
+ctx.fillStyle = 'green';
+ctx.fillRect(level.goal_position[0] * 10, level.goal_position[1] * 10, 10, 10);
+
+// Check if the player has reached the goal
+if (level.player_position[0] === level.goal_position[0] && level.player_position[1] === level.goal_position[1]) {
+alert('You win!');
+}
+});
+</script>
+</body>
+</html>
+
